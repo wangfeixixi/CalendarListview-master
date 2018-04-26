@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:calendar="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.andexert.calendarlistview.library.DayPickerView
+        android:id="@+id/pickerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        calendar:colorNormalDay="#333333"
+        calendar:colorSelectedDayText="#ffffff"
+        calendar:textSizeDay="14sp"
+        calendar:textSizeMonth="17sp"
+        calendar:textSizeDayName="17sp"
+        calendar:headerMonthLeft="20dp"
+        />
+
+</RelativeLayout>
