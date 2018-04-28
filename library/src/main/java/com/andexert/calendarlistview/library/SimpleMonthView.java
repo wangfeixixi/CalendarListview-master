@@ -71,7 +71,7 @@ class SimpleMonthView extends View {
     protected static int MONTH_HEADER_SIZE;
     protected static int MONTH_LABEL_TEXT_SIZE;
     protected static int MONTH_HEADER_MARGIN;
-    private final Drawable beginCircle;
+//    private final Drawable beginCircle;
     private final int mSelectedBeginLastColor;
 
     protected int mPadding = 0;
@@ -162,7 +162,7 @@ class SimpleMonthView extends View {
 
         isPrevDayEnabled = typedArray.getBoolean(R.styleable.DayPickerView_enablePreviousDay, true);
 
-        beginCircle = context.getResources().getDrawable(R.drawable.circle_bg);
+//        beginCircle = context.getResources().getDrawable(R.drawable.circle_bg);
 
         dpStroke = DensityUtil.dp2px(context,2);
 
