@@ -3,25 +3,35 @@ package com.andexert.sample;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
-import com.andexert.calendarlistview.library.DayPickerView;
-import com.andexert.calendarlistview.library.SimpleMonthAdapter;
+import com.wangfeixixi.calendar.CalendarDay;
+import com.wangfeixixi.calendar.DatePickerListenr;
+import com.wangfeixixi.calendar.CalendarView;
+import com.wangfeixixi.calendar.CalendarAdapter;
+import com.wangfeixixi.calendar.SelectedDays;
 
 
-public class MainActivity extends Activity implements com.andexert.calendarlistview.library.DatePickerController {
+public class MainActivity extends Activity implements DatePickerListenr {
 
-    private DayPickerView dayPickerView;
+    private CalendarView dayPickerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dayPickerView = (DayPickerView) findViewById(R.id.pickerView);
+        dayPickerView = (CalendarView) findViewById(R.id.pickerView);
         dayPickerView.setController(this);
+
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dayPickerView.clear();
+            }
+        });
+
     }
 
     @Override
@@ -31,7 +41,7 @@ public class MainActivity extends Activity implements com.andexert.calendarlistv
     }
 
     @Override
-    public void onDateRangeSelected(SimpleMonthAdapter.SelectedDays<SimpleMonthAdapter.CalendarDay> selectedDays) {
+    public void onDateRangeSelected(SelectedDays<CalendarDay> selectedDays) {
         Log.e("aaaaDate range selected", selectedDays.getFirst().toString() + " --> " + selectedDays.getLast().toString());
         Toast.makeText(this, selectedDays.getFirst().toString() + " --> " + selectedDays.getLast().toString(), Toast.LENGTH_SHORT).show();
     }
