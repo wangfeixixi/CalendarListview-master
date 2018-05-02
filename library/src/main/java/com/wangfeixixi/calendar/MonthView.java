@@ -247,35 +247,44 @@ class MonthView extends View {
                     canvas.drawCircle(x, y - MINI_DAY_NUMBER_TEXT_SIZE / 3, DAY_SELECTED_CIRCLE_SIZE, mSelectedCirclePaint);
                     Log.d(TAG, "mSelectedBeginDay: " + mSelectedBeginDay);
                     Log.d(TAG, "mSelectedLastDay: " + mSelectedLastDay);
-                    Log.d(TAG, "isBeginDay: " + isBeginDay(mSelectedBeginYear, mSelectedBeginMonth, mSelectedBeginDay,
-                            mSelectedLastYear, mSelectedLastMonth, mSelectedLastDay));
+                    Log.d(TAG, "isBeginDay: " + isBeginDay());
 
                     if (mSelectedBeginDay != -1 && mSelectedLastDay != -1) {
                         RectF rectF1 = new RectF(rectF.left + dpStroke, rectF.top + dpStroke, rectF.right - dpStroke, rectF.bottom - dpStroke);
+//                        RectF rectF1 =rectF ;
+                        RectF rectF2;
 
-
-                        if (isBeginDay(mSelectedBeginYear, mSelectedBeginMonth, mSelectedBeginDay,
-                                mSelectedLastYear, mSelectedLastMonth, mSelectedLastDay)) {
+                        if (isBeginDay()) {
                             if ((mMonth == mSelectedBeginMonth && mSelectedBeginDay == day && mSelectedBeginYear == mYear)) {
                                 canvas.drawArc(rectF1, 90, 180, false, mSelectedBeginLastPaint);
-                                RectF rectF2 = new RectF(x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x + mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
+                                rectF2 = new RectF(x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x + mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
                                 canvas.drawRect(rectF2, mSelectedCirclePaint);
+                                Log.d(TAG, "test: 11111");
                             } else {
                                 canvas.drawArc(rectF1, -90, 180, false, mSelectedBeginLastPaint);
-                                RectF rectF2 = new RectF(x - mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
+                                rectF2 = new RectF(x - mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
                                 canvas.drawRect(rectF2, mSelectedCirclePaint);
+                                Log.d(TAG, "test: 22222");
                             }
                         } else {
-                            if ((mMonth == mSelectedBeginMonth && mSelectedBeginDay == day && mSelectedBeginYear == mYear)) {
+                            if (mSelectedBeginDay == mSelectedLastDay) {//双击
+//                                canvas.drawArc(rectF1, 90, 180, false, mSelectedBeginLastPaint);
+//                                rectF2 = new RectF(x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x + mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
+//                                canvas.drawRect(rectF2, mSelectedCirclePaint);
+                                Log.d(TAG, "test: 000000");//todo
+                            } else if ((mMonth == mSelectedBeginMonth && mSelectedBeginDay == day && mSelectedBeginYear == mYear)) {
                                 canvas.drawArc(rectF1, -90, 180, false, mSelectedBeginLastPaint);
-                                RectF rectF2 = new RectF(x - mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
+                                rectF2 = new RectF(x - mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
                                 canvas.drawRect(rectF2, mSelectedCirclePaint);
+                                Log.d(TAG, "test: 3333");
                             } else {
                                 canvas.drawArc(rectF1, 90, 180, false, mSelectedBeginLastPaint);
-                                RectF rectF2 = new RectF(x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x + mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
+                                rectF2 = new RectF(x, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x + mWidth / 14, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
                                 canvas.drawRect(rectF2, mSelectedCirclePaint);
+                                Log.d(TAG, "test: 4444");
                             }
                         }
+
                     }
                 }
             }
@@ -343,7 +352,7 @@ class MonthView extends View {
         }
     }
 
-    private boolean isBeginDay(int mSelectedBeginYear, int mSelectedBeginMonth, int mSelectedBeginDay, int mSelectedLastYear, int mSelectedLastMonth, int mSelectedLastDay) {
+    private boolean isBeginDay() {
         if (mSelectedBeginYear < mSelectedLastYear) return true;
         if (mSelectedBeginYear > mSelectedLastYear) return false;
         if (mSelectedBeginMonth < mSelectedLastMonth) return true;
