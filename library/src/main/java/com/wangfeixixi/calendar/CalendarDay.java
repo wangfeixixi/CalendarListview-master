@@ -8,9 +8,9 @@ public class CalendarDay implements Serializable {
     private static final long serialVersionUID = -5456695978688356202L;
     private Calendar calendar;
 
-    int day;
-    int month;
-    int year;
+    public int day;
+    public int month;
+    public int year;
 
     public CalendarDay() {
         setTime(System.currentTimeMillis());

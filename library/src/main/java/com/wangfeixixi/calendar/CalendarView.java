@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 public class CalendarView extends RecyclerView {
     protected Context mContext;
     protected CalendarAdapter mAdapter;
-    private DatePickerListenr mController;
+    private DayListenr mController;
     protected int mCurrentScrollState = 0;
     protected long mPreviousScrollPosition;
     protected int mPreviousScrollState = 0;
@@ -34,7 +34,7 @@ public class CalendarView extends RecyclerView {
         }
     }
 
-    public void setController(DatePickerListenr mController) {
+    public void setController(DayListenr mController) {
         this.mController = mController;
         setUpAdapter();
         setAdapter(mAdapter);
@@ -75,11 +75,7 @@ public class CalendarView extends RecyclerView {
         setFadingEdgeLength(0);
     }
 
-    public SelectedDays<CalendarDay> getSelectedDays() {
-        return mAdapter.getSelectedDays();
-    }
-
-    protected DatePickerListenr getController() {
+    protected DayListenr getController() {
         return mController;
     }
 
@@ -88,6 +84,6 @@ public class CalendarView extends RecyclerView {
     }
 
     public void clear() {
-        mAdapter.setSelectedDay(null);
+        mAdapter.clear();
     }
 }
