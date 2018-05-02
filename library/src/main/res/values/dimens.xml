@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size_day">14sp</dimen>
-    <dimen name="text_size_month">17sp</dimen>
-    <dimen name="text_size_day_name">17sp</dimen>
-    <dimen name="header_month_height">52dip</dimen>
-    <dimen name="selected_day_radius">18dip</dimen>
+    <dimen name="calendar_text_size_day">14sp</dimen>
+    <dimen name="calendar_text_size_month">17sp</dimen>
+    <dimen name="calendar_text_size_day_name">17sp</dimen>
+    <dimen name="calendar_header_month_height">52dip</dimen>
+    <dimen name="calendar_selected_day_radius">18dip</dimen>
     <dimen name="calendar_height">316dip</dimen>
     <dimen name="canlendar_title_margin">20dip</dimen>
 

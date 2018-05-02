@@ -124,6 +124,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<MonthViewHolder> imple
     }
 
     public void clear() {
+        firstDay = null;
+        lastDay = null;
+        notifyDataSetChanged();
 
     }
 }

@@ -36,7 +36,6 @@ import android.graphics.Typeface;
 import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -137,25 +136,25 @@ class MonthView extends View {
         today.setToNow();
         mDayOfWeekTypeface = "sans_serif";
         mMonthTitleTypeface = "sans_serif";
-        mCurrentDayTextColor = typedArray.getColor(R.styleable.CalendarView_colorCurrentDay, resources.getColor(R.color.normal_day));
-        mMonthTextColor = typedArray.getColor(R.styleable.CalendarView_colorMonthName, resources.getColor(R.color.normal_day));
-        mDayTextColor = typedArray.getColor(R.styleable.CalendarView_colorDayName, resources.getColor(R.color.normal_day));
-        mDayNumColor = typedArray.getColor(R.styleable.CalendarView_colorNormalDay, resources.getColor(R.color.normal_day));
-        mPreviousDayColor = typedArray.getColor(R.styleable.CalendarView_colorPreviousDay, resources.getColor(R.color.normal_day));
-        mSelectedDaysColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayBackground, resources.getColor(R.color.selected_day_background));
-        mSelectedBeginLastColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayBackground, resources.getColor(R.color.selected_half_circle_background));
+        mCurrentDayTextColor = typedArray.getColor(R.styleable.CalendarView_colorCurrentDay, resources.getColor(R.color.calendar_normal_day));
+        mMonthTextColor = typedArray.getColor(R.styleable.CalendarView_colorMonthName, resources.getColor(R.color.calendar_normal_day));
+        mDayTextColor = typedArray.getColor(R.styleable.CalendarView_colorDayName, resources.getColor(R.color.calendar_normal_day));
+        mDayNumColor = typedArray.getColor(R.styleable.CalendarView_colorNormalDay, resources.getColor(R.color.calendar_normal_day));
+        mPreviousDayColor = typedArray.getColor(R.styleable.CalendarView_colorPreviousDay, resources.getColor(R.color.calendar_normal_day));
+        mSelectedDaysColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayBackground, resources.getColor(R.color.calendar_selected_day_background));
+        mSelectedBeginLastColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayBackground, resources.getColor(R.color.calendar_selected_half_circle_background));
 
-        mMonthTitleBGColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayText, resources.getColor(R.color.selected_day_text));
+        mMonthTitleBGColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayText, resources.getColor(R.color.calendar_selected_day_text));
 
         mDrawRect = typedArray.getBoolean(R.styleable.CalendarView_drawRoundRect, false);
 
         mStringBuilder = new StringBuilder(50);
 
-        MINI_DAY_NUMBER_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_textSizeDay, resources.getDimensionPixelSize(R.dimen.text_size_day));
-        MONTH_LABEL_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_textSizeMonth, resources.getDimensionPixelSize(R.dimen.text_size_month));
-        MONTH_DAY_LABEL_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_textSizeDayName, resources.getDimensionPixelSize(R.dimen.text_size_day_name));
-        MONTH_HEADER_SIZE = typedArray.getDimensionPixelOffset(R.styleable.CalendarView_headerMonthHeight, resources.getDimensionPixelOffset(R.dimen.header_month_height));
-        DAY_SELECTED_CIRCLE_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_selectedDayRadius, resources.getDimensionPixelOffset(R.dimen.selected_day_radius));
+        MINI_DAY_NUMBER_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_textSizeDay, resources.getDimensionPixelSize(R.dimen.calendar_text_size_day));
+        MONTH_LABEL_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_textSizeMonth, resources.getDimensionPixelSize(R.dimen.calendar_text_size_month));
+        MONTH_DAY_LABEL_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_textSizeDayName, resources.getDimensionPixelSize(R.dimen.calendar_text_size_day_name));
+        MONTH_HEADER_SIZE = typedArray.getDimensionPixelOffset(R.styleable.CalendarView_headerMonthHeight, resources.getDimensionPixelOffset(R.dimen.calendar_header_month_height));
+        DAY_SELECTED_CIRCLE_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_selectedDayRadius, resources.getDimensionPixelOffset(R.dimen.calendar_selected_day_radius));
 
         MONTH_HEADER_MARGIN = typedArray.getDimensionPixelOffset(R.styleable.CalendarView_headerMonthLeft, resources.getDimensionPixelOffset(R.dimen.canlendar_title_margin));
         mRowHeight = ((typedArray.getDimensionPixelSize(R.styleable.CalendarView_calendarHeight, resources.getDimensionPixelOffset(R.dimen.calendar_height)) - MONTH_HEADER_SIZE) / 6);

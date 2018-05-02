@@ -8,7 +8,7 @@ public class CalendarDay implements Serializable {
     private static final long serialVersionUID = -5456695978688356202L;
     private Calendar calendar;
 
-    public int day;
+    public int day =1;
     public int month;
     public int year;
 

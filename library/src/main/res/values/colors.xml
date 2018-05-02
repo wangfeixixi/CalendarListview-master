@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="normal_day">#333333</color>
-    <color name="selected_day_background">#03C2F0</color>
-    <color name="selected_day_text">#ffffff</color>
-    <color name="selected_half_circle_background">#0398F0</color>
+    <color name="calendar_normal_day">#333333</color>
+    <color name="calendar_selected_day_background">#03C2F0</color>
+    <color name="calendar_selected_day_text">#ffffff</color>
+    <color name="calendar_selected_half_circle_background">#0398F0</color>
 </resources>
