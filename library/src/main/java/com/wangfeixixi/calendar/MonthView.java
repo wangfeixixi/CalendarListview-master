@@ -27,6 +27,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -59,7 +61,7 @@ class MonthView extends View {
     public static final String VIEW_PARAMS_WEEK_START = "week_start";
 
     private static final int SELECTED_CIRCLE_ALPHA = 128;
-    private static final String TAG = "TTTT";
+    private static final String TAG = "MonthView";
     protected static int DEFAULT_HEIGHT = 32;
     protected static final int DEFAULT_NUM_ROWS = 6;
     protected static int DAY_SELECTED_CIRCLE_SIZE;
@@ -71,7 +73,7 @@ class MonthView extends View {
     protected static int MONTH_LABEL_TEXT_SIZE;
     protected static int MONTH_HEADER_MARGIN;
     //    private final Drawable beginCircle;
-    private final int mSelectedBeginLastColor;
+    private final int mSelectedDayHalfCircleColor;
 
     protected int mPadding = 0;
 
@@ -142,12 +144,11 @@ class MonthView extends View {
         mDayNumColor = typedArray.getColor(R.styleable.CalendarView_colorNormalDay, resources.getColor(R.color.calendar_normal_day));
         mPreviousDayColor = typedArray.getColor(R.styleable.CalendarView_colorPreviousDay, resources.getColor(R.color.calendar_normal_day));
         mSelectedDaysColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayBackground, resources.getColor(R.color.calendar_selected_day_background));
-        mSelectedBeginLastColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayBackground, resources.getColor(R.color.calendar_selected_half_circle_background));
+        mSelectedDayHalfCircleColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayBackground, resources.getColor(R.color.calendar_selected_half_circle));
 
         mMonthTitleBGColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayText, resources.getColor(R.color.calendar_selected_day_text));
 
         mDrawRect = typedArray.getBoolean(R.styleable.CalendarView_drawRoundRect, false);
-
         mStringBuilder = new StringBuilder(50);
 
         MINI_DAY_NUMBER_TEXT_SIZE = typedArray.getDimensionPixelSize(R.styleable.CalendarView_textSizeDay, resources.getDimensionPixelSize(R.dimen.calendar_text_size_day));
@@ -231,24 +232,22 @@ class MonthView extends View {
 
     protected void drawMonthNums(Canvas canvas) {
         int y = (mRowHeight + MINI_DAY_NUMBER_TEXT_SIZE) / 2 - DAY_SEPARATOR_WIDTH + MONTH_HEADER_SIZE;
-//        int y = DensityUtil.dp2px(getContext(),52);
-
         int paddingDay = (mWidth - 2 * mPadding) / (2 * mNumDays);
         int dayOffset = findDayOffset();
         int day = 1;
-
+//        Log.d(TAG, "y" + y + "paddingDay" + paddingDay + "dayOffset: " + dayOffset + "day" + day);
         while (day <= mNumCells) {
             int x = paddingDay * (1 + dayOffset * 2) + mPadding;
             if ((mMonth == mSelectedBeginMonth && mSelectedBeginDay == day && mSelectedBeginYear == mYear) || (mMonth == mSelectedLastMonth && mSelectedLastDay == day && mSelectedLastYear == mYear)) {
                 RectF rectF = new RectF(x - DAY_SELECTED_CIRCLE_SIZE, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) - DAY_SELECTED_CIRCLE_SIZE, x + DAY_SELECTED_CIRCLE_SIZE, (y - MINI_DAY_NUMBER_TEXT_SIZE / 3) + DAY_SELECTED_CIRCLE_SIZE);
-                if (mDrawRect) {
+                if (mDrawRect) {//矩形背景
                     canvas.drawRoundRect(rectF, 10.0f, 10.0f, mSelectedCirclePaint);
                 } else {
                     canvas.drawCircle(x, y - MINI_DAY_NUMBER_TEXT_SIZE / 3, DAY_SELECTED_CIRCLE_SIZE, mSelectedCirclePaint);
-                    Log.d(TAG, "mSelectedBeginDay: " + mSelectedBeginDay);
-                    Log.d(TAG, "mSelectedLastDay: " + mSelectedLastDay);
-                    Log.d(TAG, "isBeginDay: " + isBeginDay());
-
+//                    Log.d(TAG, "mSelectedBeginDay: " + mSelectedBeginDay);
+//                    Log.d(TAG, "mSelectedLastDay: " + mSelectedLastDay);
+//                    Log.d(TAG, "isBeginDay: " + isBeginDay());
+                    Log.d(TAG, "  canvas.drawCircle(x");
                     if (mSelectedBeginDay != -1 && mSelectedLastDay != -1) {
                         RectF rectF1 = new RectF(rectF.left + dpStroke, rectF.top + dpStroke, rectF.right - dpStroke, rectF.bottom - dpStroke);
 //                        RectF rectF1 =rectF ;
@@ -307,7 +306,9 @@ class MonthView extends View {
                     day == mSelectedBeginDay &&
                     mMonth == mSelectedBeginMonth &&
                     mYear == mSelectedBeginYear)) {
-                drawTextBack(canvas, y, x);
+//                drawTextBack(canvas, y, x);//双击背景设置
+                //第二次点击背景
+                canvas.drawCircle(x, y - MINI_DAY_NUMBER_TEXT_SIZE / 3, DAY_SELECTED_CIRCLE_SIZE, PaintUtil.getCircleBg(mSelectedDayHalfCircleColor));
             }
 
             if ((mSelectedBeginDay != -1 && mSelectedLastDay != -1 && mSelectedBeginYear == mSelectedLastYear && mSelectedBeginYear == mYear) &&
@@ -315,18 +316,21 @@ class MonthView extends View {
                             ((mSelectedBeginMonth < mSelectedLastMonth && mMonth == mSelectedBeginMonth && day > mSelectedBeginDay) || (mSelectedBeginMonth < mSelectedLastMonth && mMonth == mSelectedLastMonth && day < mSelectedLastDay)) ||
                             ((mSelectedBeginMonth > mSelectedLastMonth && mMonth == mSelectedBeginMonth && day < mSelectedBeginDay) || (mSelectedBeginMonth > mSelectedLastMonth && mMonth == mSelectedLastMonth && day > mSelectedLastDay)))) {
                 drawTextBack(canvas, y, x);
+                Log.d(TAG, "drawTextBack2");
             }
 
             if ((mSelectedBeginDay != -1 && mSelectedLastDay != -1 && mSelectedBeginYear != mSelectedLastYear && ((mSelectedBeginYear == mYear && mMonth == mSelectedBeginMonth) || (mSelectedLastYear == mYear && mMonth == mSelectedLastMonth)) &&
                     (((mSelectedBeginMonth < mSelectedLastMonth && mMonth == mSelectedBeginMonth && day < mSelectedBeginDay) || (mSelectedBeginMonth < mSelectedLastMonth && mMonth == mSelectedLastMonth && day > mSelectedLastDay)) ||
                             ((mSelectedBeginMonth > mSelectedLastMonth && mMonth == mSelectedBeginMonth && day > mSelectedBeginDay) || (mSelectedBeginMonth > mSelectedLastMonth && mMonth == mSelectedLastMonth && day < mSelectedLastDay))))) {
                 drawTextBack(canvas, y, x);
+                Log.d(TAG, "drawTextBack3");
             }
 
             if ((mSelectedBeginDay != -1 && mSelectedLastDay != -1 && mSelectedBeginYear == mSelectedLastYear && mYear == mSelectedBeginYear) &&
                     ((mMonth > mSelectedBeginMonth && mMonth < mSelectedLastMonth && mSelectedBeginMonth < mSelectedLastMonth) ||
                             (mMonth < mSelectedBeginMonth && mMonth > mSelectedLastMonth && mSelectedBeginMonth > mSelectedLastMonth))) {
                 drawTextBack(canvas, y, x);
+                Log.d(TAG, "drawTextBack4");
 
             }
 
@@ -334,11 +338,14 @@ class MonthView extends View {
                     ((mSelectedBeginYear < mSelectedLastYear && ((mMonth > mSelectedBeginMonth && mYear == mSelectedBeginYear) || (mMonth < mSelectedLastMonth && mYear == mSelectedLastYear))) ||
                             (mSelectedBeginYear > mSelectedLastYear && ((mMonth < mSelectedBeginMonth && mYear == mSelectedBeginYear) || (mMonth > mSelectedLastMonth && mYear == mSelectedLastYear))))) {
                 drawTextBack(canvas, y, x);
+                Log.d(TAG, "drawTextBack5");
             }
 
             if (!isPrevDayEnabled && prevDay(day, today) && today.month == mMonth && today.year == mYear) {
                 mMonthNumPaint.setColor(mPreviousDayColor);
                 mMonthNumPaint.setTypeface(Typeface.defaultFromStyle(Typeface.ITALIC));
+
+                Log.d(TAG, "drawTextBack6");
             }
 
             canvas.drawText(format, x, y, mMonthNumPaint);
@@ -405,6 +412,7 @@ class MonthView extends View {
         mMonthTitleBGPaint.setTextAlign(Align.CENTER);
         mMonthTitleBGPaint.setStyle(Style.FILL);
 
+        //选择天的背景
         mSelectedCirclePaint = new Paint();
         mSelectedCirclePaint.setFakeBoldText(true);
         mSelectedCirclePaint.setAntiAlias(true);
@@ -415,7 +423,7 @@ class MonthView extends View {
 
         mSelectedBeginLastPaint = new Paint();
         mSelectedBeginLastPaint.setAntiAlias(true);
-        mSelectedBeginLastPaint.setColor(mSelectedBeginLastColor);
+        mSelectedBeginLastPaint.setColor(mSelectedDayHalfCircleColor);
         mSelectedBeginLastPaint.setStyle(Style.STROKE);
         mSelectedBeginLastPaint.setStrokeWidth(CalendarUtils.dp2px(getContext(), 2));
 

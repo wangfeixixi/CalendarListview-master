@@ -1,6 +1,6 @@
 package com.wangfeixixi.calendar;
 
-public interface DayListenr {
+public interface DayListener {
     void onDayClick(CalendarDay firstDay);
 
     void onDaysSelected(CalendarDay firstDay, CalendarDay lastDay);

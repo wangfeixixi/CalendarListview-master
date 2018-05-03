@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 public class CalendarView extends RecyclerView {
     protected Context mContext;
     protected CalendarAdapter mAdapter;
-    private DayListenr dayListenr;
+    private DayListener dayListenr;
     protected int mCurrentScrollState = 0;
     protected long mPreviousScrollPosition;
     protected int mPreviousScrollState = 0;
@@ -34,7 +34,7 @@ public class CalendarView extends RecyclerView {
         }
     }
 
-    public void setController(DayListenr mController) {
+    public void setListener(DayListener mController) {
         this.dayListenr = mController;
         setUpAdapter();
         setAdapter(mAdapter);
@@ -75,7 +75,7 @@ public class CalendarView extends RecyclerView {
         setFadingEdgeLength(0);
     }
 
-    protected DayListenr getController() {
+    protected DayListener getController() {
         return dayListenr;
     }
 

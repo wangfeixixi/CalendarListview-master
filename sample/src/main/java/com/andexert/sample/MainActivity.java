@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.wangfeixixi.calendar.CalendarDay;
-import com.wangfeixixi.calendar.DayListenr;
+import com.wangfeixixi.calendar.DayListener;
 import com.wangfeixixi.calendar.CalendarView;
 
-public class MainActivity extends Activity implements DayListenr {
+public class MainActivity extends Activity implements DayListener {
 
     private CalendarView dayPickerView;
 
@@ -20,7 +20,7 @@ public class MainActivity extends Activity implements DayListenr {
         setContentView(R.layout.activity_main);
 
         dayPickerView = (CalendarView) findViewById(R.id.pickerView);
-        dayPickerView.setController(this);
+        dayPickerView.setListener(this);
 
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,13 +45,13 @@ public class MainActivity extends Activity implements DayListenr {
 
     @Override
     public void onDayClick(CalendarDay firstDay) {
-        Log.e("aaaa 000000000", firstDay.toString());
+        Log.e("outer", firstDay.toString());
     }
 
     @Override
     public void onDaysSelected(CalendarDay firstDay, CalendarDay lastDay) {
 
-        Log.e("aaaa bbbbbbbbb", firstDay.toString() + " --> " + lastDay.toString());
+        Log.e("outer", firstDay.toString() + " --> " + lastDay.toString());
         Toast.makeText(this, firstDay.toString() + " --> " + lastDay.toString(), Toast.LENGTH_SHORT).show();
     }
 }

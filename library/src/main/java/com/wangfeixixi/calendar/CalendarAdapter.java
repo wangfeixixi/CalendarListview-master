@@ -12,7 +12,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<MonthViewHolder> imple
     protected static final int MONTHS_IN_YEAR = 12;
     private final TypedArray typedArray;
     private final Context mContext;
-    private final DayListenr datePickerListenr;
+    private final DayListener datePickerListenr;
     private final Calendar calendar;
     private final Integer firstMonth;
 
@@ -20,7 +20,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<MonthViewHolder> imple
     private CalendarDay lastDay;
 
 
-    public CalendarAdapter(Context context, DayListenr datePickerController, TypedArray typedArray) {
+    public CalendarAdapter(Context context, DayListener datePickerController, TypedArray typedArray) {
         this.typedArray = typedArray;
         calendar = Calendar.getInstance();
         firstMonth = typedArray.getInt(R.styleable.CalendarView_firstMonth, calendar.get(Calendar.MONTH));
