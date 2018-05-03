@@ -8,6 +8,7 @@ import android.support.annotation.ColorInt;
  */
 
 public class PaintUtil {
+    //圆环
     public static Paint getCircleBg(@ColorInt int color) {
         Paint paint = new Paint();
         paint.setFakeBoldText(true);
