@@ -114,7 +114,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<MonthViewHolder> imple
         datePickerListenr.onDayClick(new CalendarDay(calendarDay.year, calendarDay.month + 1, calendarDay.day));
         if (firstDay != null && lastDay == null) {
             lastDay = calendarDay;
-            datePickerListenr.onDaysSelected(new CalendarDay(firstDay.year, firstDay.month + 1, firstDay.day), new CalendarDay(lastDay.year, lastDay.month + 1, lastDay.day));
+            if (firstDay.getDate().getTime() > lastDay.getDate().getTime()) {
+                datePickerListenr.onDaysSelected(new CalendarDay(lastDay.year, lastDay.month + 1, lastDay.day), new CalendarDay(firstDay.year, firstDay.month + 1, firstDay.day));
+            } else {
+                datePickerListenr.onDaysSelected(new CalendarDay(firstDay.year, firstDay.month + 1, firstDay.day), new CalendarDay(lastDay.year, lastDay.month + 1, lastDay.day));
+            }
         } else if (lastDay != null) {
             firstDay = calendarDay;
             lastDay = null;
