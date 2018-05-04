@@ -27,8 +27,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -74,6 +72,7 @@ class MonthView extends View {
     protected static int MONTH_HEADER_MARGIN;
     //    private final Drawable beginCircle;
     private final int mSelectedDayHalfCircleColor;
+    private final int mDayFailTextColor;
 
     protected int mPadding = 0;
 
@@ -141,6 +140,7 @@ class MonthView extends View {
         mCurrentDayTextColor = typedArray.getColor(R.styleable.CalendarView_colorCurrentDay, resources.getColor(R.color.calendar_normal_day));
         mMonthTextColor = typedArray.getColor(R.styleable.CalendarView_colorMonthName, resources.getColor(R.color.calendar_normal_day));
         mDayTextColor = typedArray.getColor(R.styleable.CalendarView_colorDayName, resources.getColor(R.color.calendar_normal_day));
+        mDayFailTextColor = typedArray.getColor(R.styleable.CalendarView_colorDayName, resources.getColor(R.color.calendar_fail_day));
         mDayNumColor = typedArray.getColor(R.styleable.CalendarView_colorNormalDay, resources.getColor(R.color.calendar_normal_day));
         mPreviousDayColor = typedArray.getColor(R.styleable.CalendarView_colorPreviousDay, resources.getColor(R.color.calendar_normal_day));
         mSelectedDaysColor = typedArray.getColor(R.styleable.CalendarView_colorSelectedDayBackground, resources.getColor(R.color.calendar_selected_day_background));
@@ -231,10 +231,14 @@ class MonthView extends View {
     }
 
     protected void drawMonthNums(Canvas canvas) {
+
         int y = (mRowHeight + MINI_DAY_NUMBER_TEXT_SIZE) / 2 - DAY_SEPARATOR_WIDTH + MONTH_HEADER_SIZE;
         int paddingDay = (mWidth - 2 * mPadding) / (2 * mNumDays);
         int dayOffset = findDayOffset();
         int day = 1;
+//        if (mHasToday && (mToday > day)) {
+//            return;
+//        }
 //        Log.d(TAG, "y" + y + "paddingDay" + paddingDay + "dayOffset: " + dayOffset + "day" + day);
         while (day <= mNumCells) {
             int x = paddingDay * (1 + dayOffset * 2) + mPadding;
@@ -293,6 +297,8 @@ class MonthView extends View {
             if (mHasToday && (mToday == day)) {
                 mMonthNumPaint.setColor(mCurrentDayTextColor);
                 format = "今";
+            } else if (mHasToday && (mToday > day)) {
+                mMonthNumPaint.setColor(mDayFailTextColor);
             } else {
                 mMonthNumPaint.setColor(mDayNumColor);
             }
@@ -462,7 +468,16 @@ class MonthView extends View {
 
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
+
+            long currentTime = today.toMillis(true);
             CalendarDay calendarDay = getDayFromLocation(event.getX(), event.getY());
+
+            long selectedTime = calendarDay.getDate().getTime();
+
+            if (selectedTime < currentTime) {
+                return true;
+            }
+
             if (calendarDay != null) {
                 onDayClick(calendarDay);
             }
