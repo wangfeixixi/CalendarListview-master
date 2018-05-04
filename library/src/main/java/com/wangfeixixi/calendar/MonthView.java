@@ -471,11 +471,11 @@ class MonthView extends View {
 
             long currentTime = today.toMillis(true);
             CalendarDay calendarDay = getDayFromLocation(event.getX(), event.getY());
-
-            long selectedTime = calendarDay.getDate().getTime();
-
-            if (selectedTime < currentTime) {
-                return true;
+            if (calendarDay != null && calendarDay.getDate() != null) {
+                long selectedTime = calendarDay.getDate().getTime();
+                if (selectedTime < currentTime) {
+                    return true;
+                }
             }
 
             if (calendarDay != null) {
