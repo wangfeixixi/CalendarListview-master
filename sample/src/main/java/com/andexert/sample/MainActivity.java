@@ -45,13 +45,13 @@ public class MainActivity extends Activity implements DayListener {
 
     @Override
     public void onDayClick(CalendarDay firstDay) {
-        Log.e("outer", firstDay.toString());
+//        Log.e("outer", firstDay.toString());
     }
 
     @Override
     public void onDaysSelected(CalendarDay firstDay, CalendarDay lastDay) {
 
-        Log.e("outer", firstDay.toString() + " --> " + lastDay.toString());
-        Toast.makeText(this, firstDay.toString() + " --> " + lastDay.toString(), Toast.LENGTH_SHORT).show();
+        Log.e("outer", firstDay.toString() + " --> " + lastDay.toString() + ": " + DateUtilsWWW.getStringByFormat(firstDay.getDate().getTime(), DateUtilsWWW.dateFormatYMD) + "-->" + DateUtilsWWW.getStringByFormat(firstDay.getDate().getTime(), DateUtilsWWW.dateFormatYMD));
+//        Toast.makeText(this, firstDay.toString() + " --> " + lastDay.toString(), Toast.LENGTH_SHORT).show();
     }
 }
